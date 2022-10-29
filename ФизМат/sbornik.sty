@@ -1,0 +1,177 @@
+%\RequirePackage{подключение пакетов по умолчанию}
+%размеры полей для сборника (2,2,2,2 -- примерно)
+%\oddsidemargin=-5.4 mm 
+%\evensidemargin=-0.4 mm 
+%\textwidth=170 mm
+%\textheight=244.6 mm 
+%\headheight=0 mm
+%\headsep=0 mm 
+%\footskip=7 mm 
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{epsf,amsbsy,amscd,amsmath,amsfonts,euscript,amssymb,latexsym, textcase, geometry, sbornik, ifthen, soul}
+\geometry{top=2cm} 
+\geometry{bottom=2cm} 
+\geometry{left=2cm} 
+\geometry{right=2cm}
+\parindent=1.27cm 
+%\topmargin=-5.4mm 
+%пакет для работы с таблицами
+\usepackage{multirow}
+%пакет для задания абзацного отступа
+\usepackage{indentfirst}
+\usepackage{graphics,bm,array}
+\usepackage{graphicx}
+\usepackage{caption}
+%оформление подписи рисунка
+\captionsetup[figure]{labelsep=endash,
+justification=centering,singlelinecheck=false}
+%шрифт
+%\renewcommand{\rmdefault}{ftm} %faq
+%межстрочный интервал
+\renewcommand{\baselinestretch}{1.0}
+\tolerance=5000 \righthyphenmin=2 \exhyphenpenalty=1000
+\emergencystretch=5pt \frenchspacing \headsep=10mm
+\binoppenalty=10000 \relpenalty=10000
+
+\makeatletter
+%указатель
+\newcounter{article}
+%коллонтитулы, подчиняющиеся указателю
+\@addtoreset{footnote}{page} \@addtoreset{figure}{article}
+\@addtoreset{table}{article} \@addtoreset{equation}{article}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+%\renewcommand{\section}{\@startsection{section}{1}{\parindent}{3.5ex plus 1ex minus .2ex}{2.3ex %plus.2ex}{\large\bf}}
+\newcommand{\sect}[2]{\renewcommand{\rightcol}{\vbox{\hbox to \textwidth{\strut\hfill \small {\bf \thesection} \sc #2 \hfill}\hrule}}\section{#1}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\parindent}{3.25ex plus 1ex minus .2ex}{1.5ex plus.2ex}{\normalsize\bf}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\parindent}{3.25ex
+plus 1ex minus .2ex}{1.5ex plus.2ex}{\normalsize\bf}}
+\renewcommand{\theindex}{\@restonecoltrue \if@twocolumn\@restonecolfalse\fi
+\columnseprule=1pt \columnsep=15pt \twocolumn[\@makeschapterhead{\indexname}]%
+\@mkboth{\uppercase{\indexname}}{\uppercase{\indexname}}%
+\parindent=0pt \setlength{\parskip}{0pt plus .3pt}\let\item\@idxitem}
+\renewcommand{\normalsize}{\fontsize{14}{18pt}\selectfont}
+%отступ абзацной строки
+\setlength{\parindent}{12.7mm} 
+%межстрочный
+\linespread{1}
+\addto\captionsrussian{\renewcommand{\contentsname}{\centering
+\Large Оглавление}} 
+\pagestyle{empty}
+%интересный шаблон, но пока не нужен
+\newcommand{\article}[4]{\refstepcounter{article}\noindent{#1}\begin{center} {\bf \MakeTextUppercase{#2}} \\ #3 \\
+{\it #4} \end{center}}
+%окружение для аннотации
+\newenvironment{muquotation}
+               {\list{}{\listparindent 1.5 em% %отступ первой строки
+                        \itemindent    \listparindent % иные отступы
+                        \rightmargin=1.27cm   \leftmargin=1.27 cm % отступы справ, слева
+                        \parsep        \z@ \@plus\p@}% % отступ сверху
+                \item\relax}
+               {\endlist}
+%аннотация и ключевые слов (рус. и анг.)
+\newcommand{\ruAbstract}[1]{\begin{muquotation}\small #1\end{muquotation}}
+\newcommand{\ruKey}[1]{\begin{muquotation}\small Ключевые слова: #1\end{muquotation}}
+\newcommand{\engAbstract}[1]{\begin{muquotation}\small #1\end{muquotation}}
+\newcommand{\engKey}[1]{\begin{muquotation}\small Key words: #1\end{muquotation}}
+
+%определение команды для задания УДК
+\newcommand{\udk}[1]{
+\noindent{УДК~#1}
+}
+%почтовый адрес
+}
+
+%заголовок статьи [дополнительная информация]
+\newcommand{\ttitle}[2][\@empty]{
+\ifthenelse{\equal{#1}{\@empty}}
+{ \refstepcounter{article} {\MakeTextUppercase{\bf #2}} \\}
+{ \refstepcounter{article} {\MakeTextUppercase{\bf #2}\footnote{#1}}\\}
+}
+
+%команда для генерирования сведений об авторе. Прототип: 
+%\avtor[информация об ученой степени, звании]{И.О. фамилия}{место работы, учебы}{e-mail}
+\newcommand{\avtor}[4][\@empty]{%
+\ifthenelse{\equal{#1}{\@empty}}
+{ #2 \\ {#3} \\ {e-mail:~\emph{#4}} \\}
+{ #2, #1 \\ {#3} \\ {e-mail:~\emph{#4}} \\} 
+}
+
+%попытка создание титульного листа (пока неудачно) 
+\newcommand\makketitle{
+\begin{center}%
+   {\LARGE \title \par}%
+    \vskip 3em%
+   {\large
+    \lineskip .75em%
+     \begin{tabular}[t]{c}%
+       \avtor
+      \end{tabular}\par}%
+      \vskip 1.5em%
+  \end{center}\par
+}
+
+%\makeatletter
+%задание альтернативного списка литературы (пока не пригодился)
+\newenvironment{biblio}[1]
+      {\section*{\refname}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \itemsep=0pt plus 1pt
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\endlist}
+\renewcommand{\@biblabel}[1]{#1.\hfill}
+\makeatother
+
+
+%начало оформление шапки статьи
+\newcommand{\note}[1]{\Rightscissors {\it{#1}} \Leftscissors}
+\newcommand{\zam}[1]{{\par{{{\so{Замечание.}}~#1}}\par}}
+\newcommand{\bfit}[1]{\textit{\textbf{#1}}}
+%\newcommand{\exm}[1]{{\par{{{\sc{$\blacktriangleright$ Пример.}}~#1 }}\par}}
+\newcommand{\defi}[1]{{\par{{{\so{Определение}.}~#1}}\par}}
+%\newcommand{\teorema}[2][\@empty]{{\par{{{\so{Теорема}~#1.}~#2}}\par}}
+\newcommand{\proof}[1]{{\par{{{\so{Доказательство}.}~#1}}}}
+%\newcommand{\lemma}[2]{{\par{{{\so{Лемма}~#1.}~#2}}\par}}
+%\newcommand{\consequence}[2]{{\par{{{\so{Следствие}~#1.}~#2}}\par}}
+\newcommand{\utility}[1]{{\par{{{\sc{Полезно знать.}}~#1}}\par}}
+%\newcommand{\exm}[1]{{\par{{{\so{Пример.}}~#1}}\par}}
+%\newcommand{\exm}[2][\@empty]{{\par{{{\so{Пример}~#1.}~#2}}\par}}
+
+\newcommand{\teorema}[2][\@empty]{%
+\ifthenelse{\equal{#1}{\@empty}}
+{ {\par{{{\so{Теорема}.}~#2}}\par}}
+{{\par{{{\so{Теорема}~#1.}~#2}}\par}}}
+
+\newcommand{\lemma}[2][\@empty]{%
+\ifthenelse{\equal{#1}{\@empty}}
+{ {\par{{{\so{Лемма}.}~#2}}\par}}
+{{\par{{{\so{Лемма}~#1.}~#2}}\par}}}
+
+\newcommand{\consequence}[2][\@empty]{%
+\ifthenelse{\equal{#1}{\@empty}}
+{ {\par{{{\so{Следствие}.}~#2}}\par}}
+{{\par{{{\so{Следствие}~#1.}~#2}}\par}}}
+
+\newcommand{\exm}[2][\@empty]{%
+\ifthenelse{\equal{#1}{\@empty}}
+{ {\par{{{\so{Пример}.}~#2}}\par}}
+{{\par{{{\so{Пример}~#1.}~#2}}\par}}}
+
+\newcommand{\subtitle}[2][\@empty]{
+\ifthenelse{\equal{#1}{\@empty}}
+{{\raggedright {\MakeTextUppercase{\bf #2}}} }
+{{\bf\raggedright #1. {\MakeTextUppercase{\bf #2}}}}
+}
